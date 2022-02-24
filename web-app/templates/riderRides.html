@@ -1,0 +1,37 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:riderentry' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="cards">
+    {% for ride in rides %}
+        <div class="card bg-light mb-3">
+            <div class="card-header">Ride ID: {{ ride.rideID }}</div>
+            <div class="card-body">
+                <div class="text-start small">Destination: {{ ride.destination }}</div>
+                <div class="text-start small">Arrive time: {{ ride.arriveTime|date:"Y-m-d H:i:s" }}</div>
+                {% for record in records %}
+                    {% if record.rideID == ride.rideID %}
+                        <div class="text-start small">Owner or sharer: {{ record.ownership }}</div>
+                        <div class="text-start small">Number of passengers in your party: {{ record.passengerNumber }}</div>
+                    {% endif %}
+                {% endfor %}
+                <div class="text-start small">Total passenger number: {{ ride.passengerNumber }}</div>
+
+                <div class="text-start small">Shareable: {{ ride.shareable }}</div>
+                <div class="text-start small">Ride status: {{ ride.rideStatus }}</div> 
+
+                {% if ride.rideStatus == 'CONFIRMED' %}
+                    <div class="text-start small mt-2">Driver name: {{ ride.driver.firstName }} {{ ride.driver.lastName }}</div>
+                    <div class="text-start small">License number: {{ ride.driver.licenseNumber }}</div>
+                    <div class="text-start small">Vehicle type: {{ ride.driver.vehicleType }}</div> 
+                    <div class="text-start small">Vehicle capacity: {{ ride.driver.capacity }}</div> 
+                {% endif %}
+            </div>
+            {% if ride.rideStatus == 'OPEN' %}
+                <a href={% url 'account:rideedit' ride.rideID %} class="btn btn-primary">Edit</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</main>
+{% endblock content %}

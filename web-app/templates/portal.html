@@ -1,0 +1,9 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<main class="form-signin vertical-center">
+    <a href={% url 'account:driverentry' %}><button class="w-100 btn mt-5 btn-primary">Start to pick up passengers</button></a>
+    <a href={% url 'account:riderentry' %}><button class="w-100 btn mt-5 btn-primary">Start a ride</button></a>
+</main>
+{% endblock content %}

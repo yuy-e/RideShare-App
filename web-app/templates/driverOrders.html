@@ -1,0 +1,21 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:driversearch' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="cards">
+    {% for ride in rides %}
+        <div class="card bg-light mb-3">
+            <div class="card-header">Ride ID: {{ ride.rideID }}</div>
+            <div class="card-body">
+                <div class="text-start small">Destination: {{ ride.destination }}</div>
+                <div class="text-start small">Arrive time: {{ ride.arriveTime|date:"Y-m-d H:i:s" }}</div>
+                <div class="text-start small">Total passenger number: {{ ride.passengerNumber }}</div>
+                <div class="text-start small">Shareable: {{ ride.shareable }}</div>
+                <div class="text-start small">Ride status: {{ ride.rideStatus }}</div> 
+            </div>
+            <a href={% url 'account:driverconfirm' ride.rideID %} class="btn btn-primary">Confirm</a>
+        </div>
+    {% endfor %}
+</main>
+{% endblock content %}

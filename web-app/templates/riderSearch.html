@@ -1,0 +1,34 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:riderentry' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="form-signin vertical-center">
+    <form method="post" action={% url 'account:ridersearch' %}>
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-nomal">Join a ride now</h1>
+        <div class="form-row mt-1 row-name">
+            <div class="col me-1">
+                <input type="text" class="form-control" name="arriveTimeFrom" placeholder="Arrive time from: Y-m-d H:i:s"></input>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="arriveTimeTo" placeholder="To: Y-m-d H:i:s"></input>
+            </div>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="destination" placeholder="Destination"></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="passengerNumber" placeholder="Passenger number"></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="vehicleType" placeholder="Vehicle type: ECO, ECO XL or LUX"></input>
+        </div>
+        <button type="submit" class="w-100 btn mt-3 btn-primary">Search</button>
+
+        {% for error in form.errors.values %}
+            <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+        {% endfor %}
+    </form>
+</main>
+{% endblock content %}

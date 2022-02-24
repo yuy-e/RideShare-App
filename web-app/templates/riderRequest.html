@@ -1,0 +1,39 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:riderentry' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="form-signin vertical-center">
+    <form method="post" action={% url 'account:riderrequest' %}>
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-nomal">Request a ride now</h1>
+        <div class="form-row mt-1 row-name">
+            <div class="col me-1">
+                <input type="text" class="form-control" name="passengerNumber" placeholder="Passenger number"></input>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="shareable" placeholder="Shareable: YES or NO"></input>
+            </div>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="destination" placeholder="Destination"></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="arriveTime" placeholder="Arrive time: Y-m-d H:i:s"></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="vehicleType" placeholder="Vehicle type: ECO, ECO XL or LUX"></input>
+        </div>
+        <button type="submit" class="w-100 btn mt-3 btn-primary">Request</button>
+
+        {% for error in form.errors.values %}
+            <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+        {% endfor %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success mt-2 small">{{ msg.message }}</div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</main>
+{% endblock content %}

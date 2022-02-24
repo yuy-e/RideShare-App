@@ -1,0 +1,33 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:portal' %}><button class="btn mt-3 btn-primary btn-left">Home</button></a>
+<main class="form-signin signup-form-driver vertical-center">
+    <form method="post" action={% url 'account:driversignup' %}>
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-nomal text-center">Sign up as a driver</h1>
+        <div class="form-row mt-1 row-name">
+            <div class="col me-1">
+                <input type="text" class="form-control" name="firstName" placeholder="First name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="lastName" placeholder="Last name">
+            </div>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="licenseNumber" placeholder="License number">
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="vehicleType" placeholder="Vehicle type: ECO, ECO XL or LUX">
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="capacity" placeholder="Capacity">
+        </div>
+        <button type="submit" class="w-100 btn mt-3 btn-lg btn-primary">Next</button>
+        {% for error in form.errors.values %}
+            <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+        {% endfor %}
+    </form>
+</main>
+{% endblock content %}

@@ -1,0 +1,11 @@
+When it comes to designing a Ride-Share Web App, the first thing we need to be concerned about is the user. 
+For Register, Log In, Log Out functions, we need to make sure it is safe for the user to use our app without the possibility of leaking their privacy. When registering, we use the AuthenticationForm provided by django.contrib.auth.forms to make sure the user won’t use a simple password and just show black round points instead of plain text passwords for security. 
+
+Besides, when we are creating users or drivers, we use the template tag {% csrf_token %}vto prevent attackers from using the form to gain unauthorized access to the server.
+
+However, there are still some latent dangers. 
+First, there may be race conditions between drivers, sharers and riders. Like two or more drivers may try to confirm the same order at the same time, or a driver may try to confirm the order that another sharer wants to join. Though we haven't implemented solutions to such conditions yet, we've found that Postgres provides the keywords 'on conflict to solve the problem.
+
+And while we were deploying our project to docker, we found out that though the project run well on our devices, it could still meet with a variety of errors on docker due to the wrong configuration or other issues, and it's also hard to avoid such problems.
+
+Another thing is that our server may fail due to some unexpected errors, but at this point in time, our server can't restore itself from those failures, which means our service is not stable yet. The same for our database, once it crashed, we would lose all our data. So I think it's important to back up the database occasionally and to use DevOps tools.

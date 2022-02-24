@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/signup.css' %}" rel="stylesheet">
+
+<body>
+    <main class="form-signup vertical-center">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success mt-2 small">{{ msg.message }}</div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" action={% url 'account:signup' %}>
+            {% csrf_token %}
+            <h1 class="h3 mb-3 fw-nomal text-center">Sign up</h1>
+            <div class="form-row mt-1">
+                <input type="text" class="form-control" name="username" placeholder="User name">
+            </div>
+            <div class="form-row mt-1">
+                <input type="email" class="form-control" name="email" placeholder="Email">
+            </div>
+            <div class="form-row mt-1">
+                <input type="password" class="form-control" name="password1" placeholder="Password">
+            </div>
+            <div class="form-row mt-1">
+                <input type="password" class="form-control" name="password2" placeholder="Confirm password">
+            </div>
+            <button type="submit" class="w-100 btn mt-3 btn-lg btn-primary">Next</button>
+            <div class="small mt-3 text-center">Already have an account? <a href={% url "account:login" %}>Log in</a></div>
+
+            {% for error in form.errors.values %}
+                <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+            {% endfor %}
+        </form>
+    </main>
+</body>
+</html>

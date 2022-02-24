@@ -1,0 +1,11 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:portal' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<a href={% url 'account:riderrides' %}><button class="btn mt-3 btn-primary btn-left">View non-complete rides</button></a>
+<main class="form-signin vertical-center">
+    <a href={% url 'account:riderrequest' %}><button class="w-100 btn mt-5 btn-primary">Request a new ride</button></a>
+    <a href={% url 'account:ridersearch' %}><button class="w-100 btn mt-5 btn-primary">Join an existing ride</button></a>
+</main>
+{% endblock content %}

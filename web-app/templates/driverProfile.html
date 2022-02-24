@@ -1,0 +1,39 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+
+<a href={% url 'account:driverentry' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="form-signin signup-form-driver vertical-center">
+    <form method="post" action={% url 'account:driverupdate' %}>
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-nomal text-center">Driver profile</h1>
+        <div class="form-row mt-1 row-name">
+            <div class="col me-1">
+                <input type="text" class="form-control" name="firstName" placeholder="First name" value={{ driver.firstName }}></input>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="lastName" placeholder="Last name" value={{ driver.lastName }}></input>
+            </div>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="licenseNumber" placeholder="License number" value={{ driver.licenseNumber }}></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="vehicleType" placeholder="Vehicle type: ECO, ECO XL or LUX" value={{ driver.vehicleType }}></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="capacity" placeholder="Capacity" value={{ driver.capacity }}></input>
+        </div>
+        <button type="submit" class="w-100 btn mt-3 btn-lg btn-primary">Update</button>
+        {% for error in form.errors.values %}
+            <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+        {% endfor %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success mt-2 small">{{ msg.message }}</div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</main>
+{% endblock content %}

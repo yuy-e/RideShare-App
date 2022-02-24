@@ -1,0 +1,39 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block content %}
+<a href={% url 'account:riderrides' %}><button class="btn mt-3 btn-primary btn-left">Back</button></a>
+<main class="form-signin vertical-center">
+    <form method="post" action={% url 'account:rideedit' ride.rideID %}>
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-nomal">You are {{ rider.ownership }} of ride #{{ ride.rideID }}</h1>
+        <div class="form-row mt-1 row-name">
+            <div class="col me-1">
+                <input type="text" class="form-control" name="passengerNumber" placeholder="Passenger number" value={{ rider.passengerNumber }}></input>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" name="shareable" placeholder="Shareable: YES or NO" value={{ ride.shareable }} {% if ride.shareable == 'YES' %}readonly{% endif %}></input>
+            </div>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="destination" placeholder="Destination" value="{{ ride.destination }}" {% if rider.ownership != 'OWNER' %}readonly{% endif %}></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="arriveTime" placeholder="Arrive time: Y-m-d H:i:s" value="{{ ride.arriveTime|date:"Y-m-d H:i:s" }}" {% if rider.ownership != 'OWNER' %}readonly{% endif %}></input>
+        </div>
+        <div class="form-row mt-1">
+            <input type="text" class="form-control" name="vehicleType" placeholder="Vehicle type: ECO, ECO XL or LUX" value={{ ride.vehicleType }} {% if rider.ownership != 'OWNER' %}readonly{% endif %}></input>
+        </div>
+        <button type="submit" class="w-100 btn mt-3 btn-primary">Update</button>
+
+        {% for error in form.errors.values %}
+            <div class="alert alert-danger mt-2 small text-start">{{ error }}</div>
+        {% endfor %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-success mt-2 small">{{ msg.message }}</div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</main>
+{% endblock content %}
